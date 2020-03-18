@@ -11,6 +11,12 @@ class Car {
    * в консоль значения свойств maxSpeed, speed, isOn, distance и price.
    */
 
+  static getSpecs(car) {
+    console.log(
+      `maxSpeed: ${car.maxSpeed}, speed: ${car.speed}, isOn: ${car.isOn}, distance: ${car.distance}, price: ${car.price}`
+    );
+  }
+
   /*
    * Конструктор получает объект настроек.
    *
@@ -21,44 +27,79 @@ class Car {
    *  isOn - заведен ли автомобиль, значения true или false. Изначально false
    *  distance - общий киллометраж, изначально 0
    */
-  constructor() {}
+
+  constructor({ speed = 0, price, maxSpeed, isOn = false, distance = 0 }) {
+    this.speed = speed;
+    this._price = price;
+    this.maxSpeed = maxSpeed;
+    this.isOn = isOn;
+    this.distance = distance;
+  }
 
   /*
    * Добавь геттер и сеттер для свойства price,
    * который будет работать с свойством цены автомобиля.
    */
 
+  get price() {
+    return this._price;
+  }
+
+  set price(price) {
+    this._price = price;
+  }
+
   /*
    * Добавь код для того чтобы завести автомобиль
    * Записывает в свойство isOn значение true
    */
-  turnOn() {}
+  turnOn() {
+    return (this.isOn = true);
+  }
 
   /*
    * Добавь код для того чтобы заглушить автомобиль
    * Записывает в свойство isOn значение false,
    * и сбрасывает текущую скорость в 0
    */
-  turnOff() {}
+  turnOff() {
+    this.isOn = false;
+    this.speed = 0;
+    return;
+  }
 
   /*
    * Добавялет к свойству speed полученное значение,
    * при условии что результирующая скорость
    * не больше чем значение свойства maxSpeed
    */
-  accelerate(value) {}
+  accelerate(value) {
+    if (value <= this.maxSpeed) {
+      this.speed = value;
+    }
+    return;
+  }
 
   /*
    * Отнимает от свойства speed полученное значение,
    * при условии что результирующая скорость не меньше нуля
    */
-  decelerate(value) {}
+  decelerate(value) {
+    if (value > 0) {
+      this.speed = this.speed - value;
+    }
+  }
 
   /*
    * Добавляет в поле distance киллометраж (hours * speed),
    * но только в том случае если машина заведена!
    */
-  drive(hours) {}
+  drive(hours) {
+    if (this.isOn === true) {
+      this.distance += hours * this.speed;
+    }
+    return;
+  }
 }
 
 const mustang = new Car({ maxSpeed: 200, price: 2000 });
